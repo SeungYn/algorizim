@@ -1,0 +1,19 @@
+let numbers = [0, 1, 2];
+
+numbers = new Proxy(numbers, {
+  get(target, prop) {
+    if (prop in target) {
+      return target[prop];
+    } else {
+      return 0;
+    }
+  },
+});
+
+console.log(numbers[1]);
+console.log(numbers[111]);
+
+let dictionary = {
+  Hello: '안녕하세요',
+  Bye: '안녕히 가세요',
+};
