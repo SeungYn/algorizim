@@ -18,10 +18,3 @@ const a = makeCounter1();
 a();
 a();
 console.log(a());
-
-const b = makeCount2();
-
-b();
-b();
-console.log(b());
-

@@ -24,4 +24,3 @@ const b = makeCount2();
 b();
 b();
 console.log(b());
-
