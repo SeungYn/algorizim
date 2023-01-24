@@ -4,4 +4,3 @@ function test(x, y) {
 }
 
 console.log(test.hasOwnProperty('prototype'));
-console.log({}.hasOwnProperty('prototype'));
