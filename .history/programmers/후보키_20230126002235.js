@@ -10,7 +10,6 @@ function solution(relation) {
       const colLine = [];
       const useCol = new Set();
       const key = [...el].join('');
-      //최소성 검사
       const flag = usedCol.every((k) => ![...k].every((s) => key.includes(s)));
       for (let j = 0; j < rowLength; j++) {
         if (!flag) break;
@@ -23,7 +22,6 @@ function solution(relation) {
       }
 
       const set = new Set(colLine);
-      //유일성 검사
       if (set.size === rowLength) {
         usedCol.push([...useCol.values()].join(''));
         answer++;
