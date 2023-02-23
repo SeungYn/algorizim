@@ -1,4 +1,4 @@
-const date = new Date(2022, 1, 28, 12);
+const date = new Date(2022, 1, 28);
 const date2 = new Date('2022.1.4');
 const date3 = new Date('2021-1-1');
 console.log(date);
