@@ -39,14 +39,9 @@ function dfs(x, y, count) {
     if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
 
     if (!visited[nx][ny] && map[nx][ny]) {
-      localCount += dfs(nx, ny, count);
+      localCount += dfs(nx, ny, count + 1);
     }
   }
 
   return localCount;
 }
-
-/**
- * 노드를 하나씩 증가하는 방식으로 접근했는데 그게 아님 결국 나도 노드의 갯수를 세서 다 더해주는 거였음
- *
- */

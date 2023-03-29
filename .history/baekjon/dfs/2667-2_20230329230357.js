@@ -5,8 +5,6 @@ const input = fs.readFileSync(PATH).toString().trim().split('\n');
 
 const n = +input[0];
 const map = [];
-const visited = Array.from({ length: n }, () => new Array(n).fill(false));
-let apartmentCount = 0;
 let result = [];
 
 const dx = [-1, 1, 0, 0];
@@ -17,17 +15,8 @@ for (let i = 0; i < n; i++) {
 }
 
 for (let i = 0; i < n; i++) {
-  for (let j = 0; j < n; j++) {
-    if (!visited[i][j] && map[i][j]) {
-      apartmentCount++;
-      const cnt = dfs(i, j, 1);
-      cnt && result.push(cnt);
-    }
-  }
+  for (let j = 0; j < n; j++) {}
 }
-
-console.log(apartmentCount);
-result.sort((a, b) => a - b).forEach((i) => console.log(i));
 
 function dfs(x, y, count) {
   let localCount = count;
@@ -45,8 +34,3 @@ function dfs(x, y, count) {
 
   return localCount;
 }
-
-/**
- * 노드를 하나씩 증가하는 방식으로 접근했는데 그게 아님 결국 나도 노드의 갯수를 세서 다 더해주는 거였음
- *
- */
