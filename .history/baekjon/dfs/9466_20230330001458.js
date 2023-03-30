@@ -1,0 +1,49 @@
+const fs = require('fs');
+const PATH =
+  process.platform === 'linux' ? '/dev/stdin' : './baekjon/input.txt';
+
+const input = fs.readFileSync(PATH).toString().trim().split('\n');
+
+const n = +input[0];
+let isTeam = [];
+const result = [];
+let index = 1;
+
+for (let i = 0; i < n; i++) {
+  const studentCnt = input[index];
+  const students = [0, ...input[index + 1].split(' ').map(Number)];
+
+  console.log(solution(studentCnt, students));
+
+  break;
+  index += 2;
+}
+
+function solution(n, students) {
+  console.log(n);
+  let notTeamCount = 0;
+  let teamNumber = 0;
+  isTeam = Array.from({ length: n + 1 }, () => false);
+
+  for (let i = 1; i < +n + 1; i++) {
+    dfs(i, i, students);
+  }
+  function dfs(origin, now, students) {
+    if (isTeam[now]) return;
+
+    if (now === students[now]) {
+      isTeam[now] = true;
+      teamNumber++;
+      return;
+    }
+
+    if (students[now] === origin) {
+      isTeam[now] = true;
+      teamNumber++;
+      return;
+    }
+    dfs(origin, students[now], students);
+  }
+  console.log(isTeam);
+  return n - teamNumber;
+}
