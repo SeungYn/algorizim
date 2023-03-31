@@ -19,7 +19,7 @@ for (let i = 0; i < +n; i++) {
     }
   }
 }
-
+[n, ...map] = input;
 visited = Array.from({ length: n }, () => new Array(n).fill(false));
 
 for (let i = 0; i < n; i++) {

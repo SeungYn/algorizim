@@ -14,12 +14,12 @@ const dy = [0, 0, -1, 1];
 for (let i = 0; i < +n; i++) {
   for (let j = 0; j < +n; j++) {
     if (!visited[i][j]) {
-      dfs(i, j, map[i][j]);
+      dfs(i, j, map[i][j], false);
       colorCnt++;
     }
   }
 }
-
+[n, ...map] = input;
 visited = Array.from({ length: n }, () => new Array(n).fill(false));
 
 for (let i = 0; i < n; i++) {
@@ -33,7 +33,7 @@ for (let i = 0; i < n; i++) {
 
 console.log(colorCnt, colorWeakness);
 
-function dfs(x, y, color, isWeakNess = false) {
+function dfs(x, y, color, isWeakNess) {
   if (visited[x][y]) return;
   visited[x][y] = true;
   for (let i = 0; i < 4; i++) {
@@ -52,3 +52,6 @@ function dfs(x, y, color, isWeakNess = false) {
     }
   }
 }
+
+console.log(map);
+console.log(map.map((str) => str.replace(/R/g, 'G')));

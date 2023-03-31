@@ -21,11 +21,12 @@ for (let i = 0; i < +n; i++) {
 }
 
 visited = Array.from({ length: n }, () => new Array(n).fill(false));
+map = map.map((str) => str.replace(/G/g, 'R'));
 
 for (let i = 0; i < n; i++) {
   for (let j = 0; j < n; j++) {
     if (!visited[i][j]) {
-      dfs(i, j, map[i][j], true);
+      dfs(i, j, map[i][j]);
       colorWeakness++;
     }
   }
@@ -33,7 +34,7 @@ for (let i = 0; i < n; i++) {
 
 console.log(colorCnt, colorWeakness);
 
-function dfs(x, y, color, isWeakNess = false) {
+function dfs(x, y, color) {
   if (visited[x][y]) return;
   visited[x][y] = true;
   for (let i = 0; i < 4; i++) {
@@ -41,14 +42,7 @@ function dfs(x, y, color, isWeakNess = false) {
     const ny = y + dy[i];
     if (nx < 0 || nx >= n || ny < 0 || ny >= n) continue;
     if (color === map[nx][ny]) {
-      dfs(nx, ny, color, isWeakNess);
-    }
-    if (
-      isWeakNess &&
-      (color === 'R' || color === 'G') &&
-      (map[nx][ny] === 'R' || map[nx][ny] === 'G')
-    ) {
-      dfs(nx, ny, color, isWeakNess);
+      dfs(nx, ny, color);
     }
   }
 }
