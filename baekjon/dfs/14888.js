@@ -39,8 +39,6 @@ for (const list of permutationsCalcList) {
     }
   }
 
-  if (res === 52) console.log('123');
-
   maxValue = Math.max(maxValue, res);
   minValue = Math.min(minValue, res);
 }
