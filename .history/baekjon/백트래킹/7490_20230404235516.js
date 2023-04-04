@@ -8,7 +8,6 @@ let M = 0;
 let selected = [];
 let answer = [];
 let index = 1;
-
 while (n--) {
   answer = [];
   selected = [];
@@ -45,13 +44,13 @@ function dfs(depth) {
     return;
   }
 
-  selected.push(' ');
-  dfs(depth + 1);
-  selected.pop();
   selected.push('+');
   dfs(depth + 1);
   selected.pop();
   selected.push('-');
+  dfs(depth + 1);
+  selected.pop();
+  selected.push(' ');
   dfs(depth + 1);
   selected.pop();
 }

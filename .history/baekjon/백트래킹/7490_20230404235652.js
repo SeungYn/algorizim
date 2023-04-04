@@ -8,7 +8,6 @@ let M = 0;
 let selected = [];
 let answer = [];
 let index = 1;
-
 while (n--) {
   answer = [];
   selected = [];

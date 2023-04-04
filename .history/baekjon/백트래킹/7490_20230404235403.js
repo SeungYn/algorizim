@@ -8,10 +8,8 @@ let M = 0;
 let selected = [];
 let answer = [];
 let index = 1;
-
 while (n--) {
   answer = [];
-  selected = [];
   M = +input[index];
   dfs(0);
   answer.forEach((i) => console.log(i));
@@ -45,13 +43,13 @@ function dfs(depth) {
     return;
   }
 
-  selected.push(' ');
-  dfs(depth + 1);
-  selected.pop();
   selected.push('+');
   dfs(depth + 1);
   selected.pop();
   selected.push('-');
+  dfs(depth + 1);
+  selected.pop();
+  selected.push(' ');
   dfs(depth + 1);
   selected.pop();
 }

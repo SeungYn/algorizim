@@ -3,21 +3,12 @@ const PATH =
   process.platform === 'linux' ? '/dev/stdin' : './baekjon/input.txt';
 
 const input = fs.readFileSync(PATH).toString().trim().split('\n');
-let n = +input[0];
-let M = 0;
-let selected = [];
-let answer = [];
-let index = 1;
-
-while (n--) {
-  answer = [];
-  selected = [];
-  M = +input[index];
-  dfs(0);
-  answer.forEach((i) => console.log(i));
-  console.log();
-  index++;
-}
+const n = +input[0];
+const M = +input[2];
+const selected = [];
+const answer = [];
+dfs(0);
+console.log(answer);
 
 function dfs(depth) {
   if (depth === M - 1) {
@@ -37,21 +28,22 @@ function dfs(depth) {
         str += `-${i}`;
       }
     }
-    sum = eval(str.split(' ').join(''));
+    sum = eval(str.trim());
 
     if (sum === 0) {
+      console.log(selected);
       answer.push(str);
     }
     return;
   }
 
-  selected.push(' ');
-  dfs(depth + 1);
-  selected.pop();
   selected.push('+');
   dfs(depth + 1);
   selected.pop();
   selected.push('-');
+  dfs(depth + 1);
+  selected.pop();
+  selected.push(' ');
   dfs(depth + 1);
   selected.pop();
 }
