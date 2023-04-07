@@ -27,6 +27,7 @@ function dfs(depth, start, n) {
       },
       [1, 0]
     );
+    console.log(selectedIngredient);
 
     minValue = Math.min(Math.abs(sSum - nSum), minValue);
     return;
