@@ -9,16 +9,30 @@ const selected = [];
 const visited = [];
 let maxValue = -Infinity;
 let minValue = Infinity;
+let last = '';
+let first = '';
 
 dfs(0, 0);
-console.log(maxValue);
-console.log(minValue);
+console.log(last);
+console.log(first);
 
 function dfs(start, depth) {
   if (depth === n + 1) {
-    if (!isSizeComparison(signList, selected)) return;
-    maxValue = max(maxValue, selected.join(''));
-    minValue = min(minValue, selected.join(''));
+    let check = true;
+
+    for (let i = 0; i < n; i++) {
+      if (signList[i] === '>') {
+        if (selected[i] < selected[i + 1]) check = false;
+      }
+
+      if (signList[i] === '<') {
+        if (selected[i] > selected[i + 1]) check = false;
+      }
+      if (!check) return;
+    }
+
+    if (first === '') first = selected.join('');
+    last = selected.join('');
     return;
   }
 
