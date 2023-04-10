@@ -1,26 +1,32 @@
 const fs = require('fs');
 const PATH = process.platform === 'linux' ? 'dev/stdin' : './baekjon/input.txt';
 const input = fs.readFileSync(PATH).toString().trim().split('\n');
-let n = +input[0];
+let testCase = +input[0];
 let startIndex = 1;
-while (n > 0) {
-  let successCount = 1;
+const answer = [];
+
+while (testCase > 0) {
   const personCount = +input[startIndex];
-  const line = input.slice(startIndex + 1, startIndex + 1 + personCount);
-  const personScores = line.map((i) => i.split(' ').map((k) => +k));
+  const list = input
+    .slice(startIndex + 1, startIndex + 1 + personCount)
+    .map((line) => line.split(' ').map(Number))
+    .sort((a, b) => a[0] - b[0]);
+
   startIndex += personCount + 1;
 
-  personScores.sort((a, b) => a[0] - b[0]);
-
-  let fivot = personScores[0];
+  let successCount = 1;
+  let pivot = list[0][1];
   for (let i = 1; i < personCount; i++) {
-    if (fivot[0] > personScores[i][0] || fivot[1] > personScores[i][1]) {
-      successCount++;
-      fivot = personScores[i];
+    if (pivot < list[i][1]) {
+      continue;
     }
+    pivot = Math.min(pivot, list[i][1]);
+    successCount++;
   }
   console.log(successCount);
-  n--;
+  answer.push(successCount);
+
+  testCase--;
 }
 
 //
