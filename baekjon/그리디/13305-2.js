@@ -21,4 +21,8 @@ for (let i = 1; i < n - 1; i++) {
   }
 }
 
-console.log(String(result));
+//console.log(String(result));
+
+console.log(9007199254740991n + 10);
+console.log(9007199254740991n + 20n);
+console.log(9007199254740991n + 30n);
