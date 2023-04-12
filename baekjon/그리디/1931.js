@@ -5,13 +5,8 @@ const input = fs.readFileSync(PATH).toString().trim().split('\n');
 const n = +input[0];
 const data = input.slice(1).map((str) => [...str.split(' ').map((i) => +i)]);
 data.sort((a, b) => {
-  if (a[1] - b[1] > 0) return 1;
-  else if (a[1] - b[1] < 0) return -1;
-  else {
-    if (a[0] - b[0] > 0) return 1;
-    else if (a[0] - b[0] < 0) return -1;
-    else return 0;
-  }
+  if (a[1] != b[1]) return a[1] - b[1];
+  else return a[0] - b[0];
 });
 
 let count = 1;
