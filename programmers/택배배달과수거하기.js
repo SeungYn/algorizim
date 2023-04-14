@@ -26,7 +26,7 @@ function solution(cap, n, deliveries, pickups) {
       if (upIndex < 0) break;
       if (trukSpace >= deliveries[upIndex]) {
         trukSpace -= deliveries[upIndex];
-        deliveries[upIndex] = 0;
+        deliveries[upIndex] = 0;image.png
         upIndex--;
       } else {
         deliveries[upIndex] -= trukSpace;
