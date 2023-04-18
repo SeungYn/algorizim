@@ -1,7 +1,5 @@
-6
-abba
-abcba
-accba
-abcca
-acfa
-abca
+4 4 8
+3
+0 10
+1 10
+2 1
