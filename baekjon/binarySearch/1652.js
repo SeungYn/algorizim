@@ -27,5 +27,3 @@ while (start <= end) {
     end = mid - 1;
   }
 }
-
-console.log(result);
