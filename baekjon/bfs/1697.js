@@ -57,16 +57,11 @@ while (q.size > 0) {
     break;
   }
 
-  if (now - 1 >= 0 && now - 1 < 1000001 && positions[now - 1] === 0) {
-    q.enqueue(now - 1);
-    positions[now - 1] = positions[now] + 1;
-  }
-  if (now + 1 >= 0 && now + 1 < 1000001 && positions[now + 1] === 0) {
-    q.enqueue(now + 1);
-    positions[now + 1] = positions[now] + 1;
-  }
-  if (now * 2 >= 0 && now * 2 < 1000001 && positions[now * 2] === 0) {
-    q.enqueue(now * 2);
-    positions[now * 2] = positions[now] + 1;
+  for (let next of [now - 1, now + 1, now * 2]) {
+    if (next < 0 && next >= 1000001) continue;
+    if (positions[next] === 0) {
+      q.enqueue(next);
+      positions[next] = positions[now] + 1;
+    }
   }
 }
