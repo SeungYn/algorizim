@@ -16,7 +16,7 @@ while (start < end) {
   for (let i = 1; i <= n; i++) {
     sum += Math.min(n, parseInt(mid / i));
   }
-  console.log(start, mid, end);
+  //console.log(start, mid, end);
   if (sum >= k) {
     end = mid - 1;
     result = mid;
