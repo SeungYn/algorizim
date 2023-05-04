@@ -13,21 +13,23 @@ for (let i = 0; i < n; i++) {
   const line = input[i + 1].split(' ').map(Number);
   for (let j = 0; j < n; j++) {
     graph[i + 1][j + 1] = line[j];
-    if (line[j] !== 0) virusPosition.push([i + 1, j + 1]);
+    if (line[j] !== 0) virusPosition.push([i + 1, j + 1, line[j]]);
   }
 }
 
-for (let [vx, vy] of virusPosition) {
-  bfs(s, vx, vy, graph[vx][vy]);
-}
+virusPosition.sort((a, b) => a[2] - b[2]);
+bfs(s, virusPosition);
 
 console.log(graph[x][y]);
 
-function bfs(s, x, y, vType) {
-  const q = [[x, y, 1]];
+function bfs(s, virusPosition) {
+  const q = [];
+  for (const [x, y, type] of virusPosition) {
+    q.push([x, y, 1, type]);
+  }
 
   while (q.length > 0) {
-    const [cx, cy, cs] = q.shift();
+    const [cx, cy, cs, type] = q.shift();
     if (cs > s) break;
     for (let [dx, dy] of [
       [-1, 0],
@@ -39,8 +41,8 @@ function bfs(s, x, y, vType) {
       const ny = dy + cy;
       if (nx < 1 || nx > n || ny < 1 || ny > n) continue;
       if (graph[nx][ny] !== 0) continue;
-      graph[nx][ny] = vType;
-      q.push([nx, ny, cs + 1]);
+      graph[nx][ny] = type;
+      q.push([nx, ny, cs + 1, type]);
     }
   }
 }
