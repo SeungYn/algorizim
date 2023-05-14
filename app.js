@@ -1,14 +1,31 @@
-// 과연_내가_실행이_될까요();
+function solution(begin, target, words) {
+  var answer = 0;
 
-// function 과연_내가_실행이_될까요() {
-//   console.log('두근두근');
-// }
+  function dfs(words, target, now, count) {
+    console.log(target, now, count);
 
-const x = 'xx';
+    if (target === now) {
+      answer = Math.min(answer, count);
+      return;
+    }
 
-console.log(a);
-test(); // 출력 결과: xx
+    for (let i = 0; i < words.length; i++) {
+      if (check(now, words[i])) dfs(words, target, words[i], count + 1);
+    }
+  }
 
-function test() {
-  console.log(x);
+  dfs(words, target, begin, 0);
+
+  return answer;
 }
+
+function check(origin, target) {
+  let cnt = 0;
+  for (let i = 0; i < origin.length; i++) {
+    if (origin[i] !== target[i]) cnt++;
+    if (cnt >= 2) return false;
+  }
+  return true;
+}
+
+solution([1, 1, 1, 1, 1], 3);

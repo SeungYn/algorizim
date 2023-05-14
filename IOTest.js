@@ -1,7 +1,25 @@
-const fs = require('fs');
-const PATH =
-  process.platform === 'linux' ? '/dev/stdin' : './baekjon/input.txt';
+function solution(cacheSize, cities) {
+  var answer = 0;
+  const HIT = 1,
+    MISS = 5;
 
-const input = fs.readFileSync(PATH).toString().trim().split('\n');
+  if (cacheSize === 0) return cities.length * MISS;
 
-console.log(input);
+  let q = [];
+
+  for (let city of cities) {
+    city = city.toLowerCase();
+
+    const cacheIndex = q.indexOf(city);
+    if (cacheIndex > -1) {
+      q.splice(cacheIndex, 1);
+      answer += HIT;
+    } else {
+      if (q.length >= cacheSize) q.shift();
+      answer += MISS;
+    }
+    q.push(city);
+  }
+
+  return answer;
+}
