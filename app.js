@@ -1,31 +1,20 @@
-function solution(begin, target, words) {
-  var answer = 0;
+function functionalSafeMoneyBag() {
+  let money = 0;
 
-  function dfs(words, target, now, count) {
-    console.log(target, now, count);
-
-    if (target === now) {
-      answer = Math.min(answer, count);
-      return;
-    }
-
-    for (let i = 0; i < words.length; i++) {
-      if (check(now, words[i])) dfs(words, target, words[i], count + 1);
-    }
+  function donate(val) {
+    money += val;
+    console.log(`${val}원이 기부됨, 현재 누적 금액: ${money}`);
   }
 
-  dfs(words, target, begin, 0);
-
-  return answer;
+  return donate;
 }
 
-function check(origin, target) {
-  let cnt = 0;
-  for (let i = 0; i < origin.length; i++) {
-    if (origin[i] !== target[i]) cnt++;
-    if (cnt >= 2) return false;
-  }
-  return true;
-}
-
-solution([1, 1, 1, 1, 1], 3);
+const donate = functionalSafeMoneyBag();
+// 1000원 기부
+donate(1000);
+// 2000원 기부
+donate(2000);
+// 2000원 기부
+donate(2000);
+// 2000원 기부
+donate(2000);
