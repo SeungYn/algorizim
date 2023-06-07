@@ -130,3 +130,5 @@ let distance = new Array(n + 1).fill(Infinity);
 
 dijkstra(1);
 console.log(distance);
+
+// ElogE 모든 간선들을 확인하며 우선순위큐는 삽입,삭제 연산 시간이 logE 이기 때문
