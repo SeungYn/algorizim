@@ -14,6 +14,19 @@ const arr = [1, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4];
 //   return start;
 // }
 
+function lowerBound2(arr, start, end, target) {
+  while (start < end) {
+    console.log(start, end, target);
+    const mid = Math.ceil((start + end) / 2);
+    if (arr[mid] < target)
+      start = mid; //이 조건문에 의해 계속 반복하게 되어서 탈출할수 없음
+    else end = mid - 1;
+  }
+  return start;
+}
+
+// console.log(lowerBound2([1, 2, 2, 2, 3], 0, 5, 2));
+
 function lowerBound(arr, start, end, target) {
   while (start < end) {
     console.log(start, end);
@@ -33,6 +46,7 @@ function upperBound(arr, start, end, target) {
   }
   return end;
 }
+console.log(lowerBound([1, 2, 2, 2, 2, 2, 2], 0, 7, 2));
 
 function countByRange(arr, leftValue, rightValue) {
   let rightIndex = upperBound(arr, 0, arr.length, rightValue);
@@ -44,7 +58,7 @@ function countByRange(arr, leftValue, rightValue) {
 //console.log(lowerBound(arr, 0, arr.length, 3));
 //console.log(upperBound(arr, 0, arr.length, 3));
 
-console.log(countByRange(arr, -1, 3));
+// console.log(countByRange(arr, -1, 3));
 
 module.exports = {
   lowerBound,

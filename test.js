@@ -1,20 +1,9 @@
-console.log(2 ** 53 + 23423423);
-console.log(Number.MAX_SAFE_INTEGER);
-console.log(9007199254740991); // 9000조
-// 자바스크립트는 대략 9000조까지 나타냄
+function binarySearch(arr, tScore, start, end) {
+  console.log(tScore, start, end);
+  if (start > end) return start;
+  const mid = parseInt((start + end) / 2);
+  if (arr[mid] >= tScore) return binarySearch(arr, tScore, start, mid - 1);
+  else return binarySearch(arr, tScore, mid + 1, end);
+}
 
-const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
-const data = [];
-
-rl.on('line', (d) => {
-  console.log(d);
-  data.push(d);
-}).on('close', () => {
-  console.log(data);
-  process.exit();
-});
+console.log(binarySearch([1, 2, 2, 2, 2], 2, 0, 4));

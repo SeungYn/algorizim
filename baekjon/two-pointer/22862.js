@@ -1,5 +1,7 @@
 // 선형으로 풀어야된다는 것을 알아내야함 큰 N,k로 인해
 // 가장 긴 짝수 연속한 부분 수열
+//
+
 const fs = require('fs');
 const PATH =
   process.platform === 'linux' ? '/dev/stdin' : './baekjon/input.txt';
