@@ -22,6 +22,7 @@ function solution(x, y, n) {
   return dp[y];
 }
 solution(3, 12, 2);
+exports.a = 123123;
 module.exports = solution;
 // 10   15 20 30 40
 // 0    1   1 1
