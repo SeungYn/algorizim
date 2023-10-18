@@ -1,6 +1,12 @@
-console.log('start');
+const list = [];
+var a = 3;
+for (var a = 1; a < 10; a++) {
+  list.push(a);
+}
 
-setTimeout(() => console.log(123), 0);
-Promise.resolve(1).then(() => console.log(1111111));
+function test() {
+  var a = 4;
+}
+test();
 
-console.log('end');
+console.log(100000000000000000000000000000000n);
