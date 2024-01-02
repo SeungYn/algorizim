@@ -11,6 +11,7 @@ const currentArr = [];
 
 dfs(1, currentArr);
 let answer = '';
+
 function dfs(dep, currentArr) {
   if (dep > m) return console.log(currentArr.join(' '));
 
