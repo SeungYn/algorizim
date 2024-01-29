@@ -7,14 +7,14 @@ let index = 1;
 
 while (testcase > 0) {
   const n = +input[index];
-  const list = [];
+  index += 1;
+  const list = input
+    .slice(index, index + n)
+    .map((line) => line.split(' ').map(Number))
+    .sort((a, b) => a[0] - b[0]);
+
   let result = 0;
   let max = Infinity;
-  index++;
-  for (let i = index; i < index + n; i++) {
-    list.push(input[i].split(' ').map(Number));
-  }
-  list.sort((a, b) => a[0] - b[0]);
 
   for (let [a, b] of list) {
     if (max > b) {
