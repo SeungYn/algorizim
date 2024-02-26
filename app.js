@@ -154,37 +154,49 @@
 //   7,
 //   8
 // );
-function solution(expression) {
-  var answer = 0;
-  const priorities = [
-    ['*', '+', '-'],
-    ['*', '-', '+'],
-    ['+', '*', '-'],
-    ['+', '-', '*'],
-    ['-', '*', '+'],
-    ['-', '+', '*'],
-  ];
+// function solution(expression) {
+//   var answer = 0;
+//   const priorities = [
+//     ['*', '+', '-'],
+//     ['*', '-', '+'],
+//     ['+', '*', '-'],
+//     ['+', '-', '*'],
+//     ['-', '*', '+'],
+//     ['-', '+', '*'],
+//   ];
 
-  for (let priority of priorities) {
-    answer = Math.max(answer, dfs(priority, 0, expression));
-  }
+//   for (let priority of priorities) {
+//     answer = Math.max(answer, dfs(priority, 0, expression));
+//   }
 
-  function dfs(priority, index, exp) {
-    console.log(exp);
-    if (index === 2) return String(eval(exp));
+//   function dfs(priority, index, exp) {
+//     console.log(exp);
+//     if (index === 2) return String(eval(exp));
 
-    if (priority[index] === '*') {
-      return eval(dfs(priority, index + 1, exp.split('*')).join('*'));
-    }
-    if (priority[index] === '+') {
-      return eval(dfs(priority, index + 1, exp.split('+')).join('+'));
-    }
-    if (priority[index] === '-') {
-      return eval(dfs(priority, index + 1, exp.split('-')).join('-'));
-    }
-  }
+//     if (priority[index] === '*') {
+//       return eval(dfs(priority, index + 1, exp.split('*')).join('*'));
+//     }
+//     if (priority[index] === '+') {
+//       return eval(dfs(priority, index + 1, exp.split('+')).join('+'));
+//     }
+//     if (priority[index] === '-') {
+//       return eval(dfs(priority, index + 1, exp.split('-')).join('-'));
+//     }
+//   }
 
-  return answer;
-}
+//   return answer;
+// }
 
 //solution('100-200*300-500+20');
+
+const transpose = (matrix) =>
+  matrix.reduce((result, row) => {
+    console.log(row.map((_, i) => [...(result[i] || []), row[i]]));
+    return row.map((_, i) => [...(result[i] || []), row[i]]);
+  }, []);
+
+transpose([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+]);
