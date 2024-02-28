@@ -8,7 +8,7 @@ const list = input[1].split(' ').map(Number);
 
 let start = 1;
 let end = Math.max(...list);
-let result = 0;
+let result = 1;
 
 while (start <= end) {
   const mid = parseInt((start + end) / 2);
@@ -16,7 +16,9 @@ while (start <= end) {
   const listSum = list
     .map((v) => (v <= mid ? 0 : v - mid))
     .reduce((a, b) => a + b);
-
+  console.log(
+    `result:${result}, start:${start}, end:${end}, mid:${mid}, m:${m}, listSum:${listSum}`
+  );
   if (listSum >= m) {
     start = mid + 1;
     result = mid;
