@@ -113,15 +113,17 @@ q.enqueue({ num: 1, val: 0 });
 distance[1] = 0;
 let ct = 0;
 while (q.values.length > 0) {
-  ct++;
   const { num, val } = q.dequeue();
+  if (distance[num] < val) continue;
 
   for (let [next, cost] of graph[num]) {
     if (cost + val < distance[next]) {
       distance[next] = cost + val;
       q.enqueue({ num: next, val: cost + val });
+      ct++;
     }
   }
+  console.log(num);
 }
-
+console.log(ct, 'ct');
 console.log(distance);
