@@ -78,13 +78,11 @@ class PriorityQueue {
   }
 }
 
-let [n, m, k] = input[0].split(' ').map(Number);
+let [n, m] = input[0].split(' ').map(Number);
 const list = input.slice(1);
 const map = Array.from({ length: n + 1 }, () => new Array());
 
-const distance = Array.from({ length: n + 1 }, () =>
-  new Array(k + 1).fill(Infinity)
-);
+let distance = new Array(n + 1).fill(Infinity);
 
 for (let line of list) {
   const [a, b, c] = line.split(' ').map(Number);
@@ -93,30 +91,64 @@ for (let line of list) {
   map[b].push([a, c]);
 }
 
-distance[1][0] = 0;
-const q = new PriorityQueue();
-q.enqueue({ num: 1, val: 0, paved: 0 });
+function dijkstra(a, b) {
+  const q = new PriorityQueue();
+  distance[1] = 0;
+  q.enqueue({ num: 1, val: 0 });
 
-while (q.values.length) {
-  const { num: node, val: dist, paved } = q.dequeue();
-  console.log(node, dist, paved, distance);
-  if (distance[node][paved] < dist) continue;
+  while (q.values.length) {
+    const { num, val } = q.dequeue();
 
-  for (let [next, nextDist] of map[node]) {
-    const dis = nextDist + dist;
+    if (distance[num] < val) continue;
 
-    if (distance[next][paved] > dis) {
-      distance[next][paved] = dis;
-      q.enqueue({ num: next, val: dis, paved });
-    }
+    for (let [next, dist] of map[num]) {
+      if (next === b && num === a) continue;
+      else if (next === a && num === b) continue;
+      const nextDist = val + dist;
 
-    //if (paved < k && dist < distance[next][paved + 1]) {
-    if (paved < k) {
-      distance[next][paved + 1] = dist;
-      q.enqueue({ num: next, val: dist, paved: paved + 1 });
+      if (distance[next] > nextDist) {
+        distance[next] = nextDist;
+        q.enqueue({ num: next, val: nextDist });
+      }
     }
   }
 }
 
-console.log(distance[n].reduce((a, b) => Math.min(a, b)));
-const tq = new PriorityQueue();
+dijkstra(-1, -1);
+
+let removes = bfs();
+let result = 0;
+
+for (let [a, b] of removes) {
+  distance = new Array(n + 1).fill(Infinity);
+  dijkstra(a, b);
+  result = Math.max(result, distance[n]);
+}
+console.log(result);
+
+function bfs() {
+  const visited = new Array(n + 1).fill(false);
+  const q = [];
+  const removes = [];
+  q.push(n);
+  while (q.length) {
+    const num = q.shift();
+
+    if (num === 1) continue;
+
+    for (let [next, val] of map[num]) {
+      const nextDist = distance[next] + val;
+
+      if (nextDist === distance[num]) {
+        removes.push([next, num]);
+
+        if (!visited[next]) {
+          q.push(next);
+          visited[next] = true;
+        }
+      }
+    }
+  }
+
+  return removes;
+}
