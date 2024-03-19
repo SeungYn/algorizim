@@ -108,17 +108,18 @@ let graph = [
 ];
 
 const q = new PriorityQueue();
-let distance = new Array(n + 1).fill(Infinity);
+let distance = Array.from({ length: n + 1 }, () => [Infinity, 0]);
 q.enqueue({ num: 1, val: 0 });
-distance[1] = 0;
+distance[1][0] = 0;
 let ct = 0;
 while (q.values.length > 0) {
   const { num, val } = q.dequeue();
-  if (distance[num] < val) continue;
+  if (distance[num][0] < val) continue;
 
   for (let [next, cost] of graph[num]) {
-    if (cost + val < distance[next]) {
-      distance[next] = cost + val;
+    if (cost + val < distance[next][0]) {
+      distance[next][0] = cost + val;
+      distance[next][1] = num;
       q.enqueue({ num: next, val: cost + val });
       ct++;
     }
@@ -126,4 +127,16 @@ while (q.values.length > 0) {
   console.log(num);
 }
 console.log(ct, 'ct');
-console.log(distance);
+for (let i = 1; i <= 7; i++) {
+  console.log(getPath(i).reverse().join('->'));
+}
+
+function getPath(node) {
+  const path = [node];
+  while (node !== 1) {
+    path.push(distance[node][1]);
+    node = distance[node][1];
+  }
+
+  return path;
+}

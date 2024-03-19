@@ -79,81 +79,56 @@ class PriorityQueue {
 }
 
 let [n, m] = input[0].split(' ').map(Number);
-const list = input.slice(1);
+const list = input.slice(1, input.length - 1);
+const [a, b] = input[input.length - 1].split(' ').map(Number);
 const map = Array.from({ length: n + 1 }, () => new Array());
-
 let distance = new Array(n + 1).fill(Infinity);
 
-for (let line of list) {
+for (const line of list) {
   const [a, b, c] = line.split(' ').map(Number);
-  // [노드 ,거리]
+  // 정점, 거리
   map[a].push([b, c]);
   map[b].push([a, c]);
 }
 
-function dijkstra(a, b) {
+distance = new Array(n + 1).fill(Infinity);
+dijkstra(1);
+let distance1ToA = distance[a];
+let distance1ToB = distance[b];
+
+distance = new Array(n + 1).fill(Infinity);
+dijkstra(a);
+let distanceAToB = distance[b];
+let distanceAToN = distance[n];
+
+distance = new Array(n + 1).fill(Infinity);
+dijkstra(b);
+let distanceBToA = distance[a];
+let distanceBToN = distance[n];
+
+const route1 = distance1ToA + distanceAToB + distanceBToN;
+const route2 = distance1ToB + distanceBToA + distanceAToN;
+const result = Math.min(route1, route2);
+
+if (result >= Infinity) return console.log(-1);
+else console.log(result);
+
+function dijkstra(a) {
   const q = new PriorityQueue();
-  distance[1] = 0;
-  q.enqueue({ num: 1, val: 0 });
+  q.enqueue({ num: a, val: 0 });
+  distance[a] = 0;
 
   while (q.values.length) {
     const { num, val } = q.dequeue();
-
-    if (distance[num] < val) continue;
+    if (val > distance[num]) continue;
 
     for (let [next, dist] of map[num]) {
-      if (next === b && num === a) continue;
-      else if (next === a && num === b) continue;
-      const nextDist = val + dist;
+      const nextDist = dist + val;
 
-      if (distance[next] > nextDist) {
-        distance[next] = nextDist;
+      if (nextDist < distance[next]) {
         q.enqueue({ num: next, val: nextDist });
+        distance[next] = nextDist;
       }
     }
   }
 }
-
-dijkstra(-1, -1);
-
-let removes = bfs();
-let result = 0;
-
-for (let [a, b] of removes) {
-  distance = new Array(n + 1).fill(Infinity);
-  dijkstra(a, b);
-  result = Math.max(result, distance[n]);
-}
-console.log(result);
-
-function bfs() {
-  const visited = new Array(n + 1).fill(false);
-  const q = [];
-  const removes = [];
-  q.push(n);
-  while (q.length) {
-    const num = q.shift();
-
-    if (num === 1) continue;
-
-    for (let [next, val] of map[num]) {
-      const nextDist = distance[next] + val;
-
-      if (nextDist === distance[num]) {
-        removes.push([next, num]);
-
-        if (!visited[next]) {
-          q.push(next);
-          visited[next] = true;
-        }
-      }
-    }
-  }
-
-  return removes;
-}
-
-setTimeout(() => console.log('setTimeout'), 0);
-setImmediate(() => console.log('setImmediate'));
-Promise.resolve().then(() => console.log('promise'));
-process.nextTick(() => console.log('nextTick'));

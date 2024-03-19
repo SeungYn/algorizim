@@ -91,32 +91,8 @@ for (let line of list) {
   map[b].push([a, c]);
 }
 
-function dijkstra(a, b) {
-  const q = new PriorityQueue();
-  distance[1] = 0;
-  q.enqueue({ num: 1, val: 0 });
-
-  while (q.values.length) {
-    const { num, val } = q.dequeue();
-
-    if (distance[num] < val) continue;
-
-    for (let [next, dist] of map[num]) {
-      if (next === b && num === a) continue;
-      else if (next === a && num === b) continue;
-      const nextDist = val + dist;
-
-      if (distance[next] > nextDist) {
-        distance[next] = nextDist;
-        q.enqueue({ num: next, val: nextDist });
-      }
-    }
-  }
-}
-
-dijkstra(-1, -1);
-
-let removes = bfs();
+dijkstra();
+const removes = bfs();
 let result = 0;
 
 for (let [a, b] of removes) {
@@ -124,36 +100,53 @@ for (let [a, b] of removes) {
   dijkstra(a, b);
   result = Math.max(result, distance[n]);
 }
+
 console.log(result);
 
+function dijkstra(a, b) {
+  const q = new PriorityQueue();
+  distance[1] = 0;
+  q.enqueue({ num: 1, val: 0 });
+
+  while (q.values.length) {
+    const { num, val } = q.dequeue();
+    if (distance[num] < val) continue;
+
+    for (let [next, nextDist] of map[num]) {
+      const dist = nextDist + val;
+
+      if (a === next && num === b) continue;
+      else if (b === next && a === num) continue;
+
+      if (dist < distance[next]) {
+        q.enqueue({ num: next, val: dist });
+        distance[next] = dist;
+      }
+    }
+  }
+}
+
 function bfs() {
-  const visited = new Array(n + 1).fill(false);
   const q = [];
-  const removes = [];
+  const edges = [];
+  const visited = new Array(n + 1).fill(false);
   q.push(n);
+  visited[n] = true;
   while (q.length) {
-    const num = q.shift();
+    const node = q.shift();
 
-    if (num === 1) continue;
+    if (node === 1) continue;
 
-    for (let [next, val] of map[num]) {
-      const nextDist = distance[next] + val;
-
-      if (nextDist === distance[num]) {
-        removes.push([next, num]);
-
+    for (let [next, dist] of map[node]) {
+      if (dist + distance[next] === distance[node]) {
+        edges.push([node, next]);
         if (!visited[next]) {
-          q.push(next);
           visited[next] = true;
+          q.push(next);
         }
       }
     }
   }
 
-  return removes;
+  return edges;
 }
-
-setTimeout(() => console.log('setTimeout'), 0);
-setImmediate(() => console.log('setImmediate'));
-Promise.resolve().then(() => console.log('promise'));
-process.nextTick(() => console.log('nextTick'));
