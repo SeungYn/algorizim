@@ -97,49 +97,63 @@ while (index < input.length - 1) {
   }
 
   dijkstra(start);
+  const removes = bfs(n, start, end);
 
-  const removes = bfs(start, end, n);
-  console.log(removes);
-  map = getNewGraph(removes, n);
+  map = getNewMap(removes, n);
   distance = new Array(n).fill(Infinity);
   dijkstra(start);
   console.log(distance[end] >= Infinity ? -1 : distance[end]);
-
   index += m + 2;
 }
 
-function getNewGraph(removes, n) {
+function getNewMap(removes, n) {
   const newMap = Array.from({ length: n }, () => []);
   for (let i = 0; i < n; i++) {
-    for (let [b, c] of map[i]) {
-      let check = true;
-      for (let [x, y] of removes) {
-        if (i === x && b === y) {
-          check = false;
-          break;
-        }
+    for (const [next, dist] of map[i]) {
+      if (!removes.some(([a, b]) => a === i && b === next)) {
+        newMap[i].push([next, dist]);
       }
-      if (check) newMap[i].push([b, c]);
     }
   }
+
   return newMap;
 }
 
-function bfs(start, end, n) {
-  const q = [];
+function dijkstra(start) {
+  const q = new PriorityQueue();
+  q.enqueue({ num: start, val: 0 });
+  distance[start] = 0;
+  while (q.values.length) {
+    const { num, val } = q.dequeue();
+    if (distance[num] < val) continue;
+
+    for (let [next, dist] of map[num]) {
+      const nextDist = dist + val;
+      if (nextDist < distance[next]) {
+        q.enqueue({ num: next, val: nextDist });
+        distance[next] = nextDist;
+      }
+    }
+  }
+}
+
+function bfs(n, start, end) {
   const removes = [];
   const visited = new Array(n).fill(false);
+  const q = [];
   q.push(end);
   visited[end] = true;
+
   while (q.length) {
-    const node = q.shift();
-    if (node === start) continue;
+    const now = q.shift();
 
-    for (let [next, dist] of reveredMap[node]) {
-      const nextDist = distance[next] + dist;
+    if (now === start) continue;
 
-      if (nextDist === distance[node]) {
-        removes.push([next, node]);
+    for (let [next, dist] of reveredMap[now]) {
+      const nextDist = dist + distance[next];
+
+      if (nextDist === distance[now]) {
+        removes.push([next, now]);
 
         if (!visited[next]) {
           visited[next] = true;
@@ -150,25 +164,4 @@ function bfs(start, end, n) {
   }
 
   return removes;
-}
-
-function dijkstra(start) {
-  const q = new PriorityQueue();
-  q.enqueue({ num: start, val: 0 });
-  distance[start] = 0;
-
-  while (q.values.length) {
-    const { num, val } = q.dequeue();
-
-    if (val > distance[num]) continue;
-
-    for (let [next, dist] of map[num]) {
-      const nextDist = dist + val;
-
-      if (nextDist < distance[next]) {
-        q.enqueue({ num: next, val: nextDist });
-        distance[next] = nextDist;
-      }
-    }
-  }
 }
