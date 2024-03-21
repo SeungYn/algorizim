@@ -19,9 +19,9 @@ while (start < n) {
     } else {
       end++;
       len++;
+      result = Math.max(result, len);
     }
   }
-  result = Math.max(result, len);
 
   if (list[start] % 2) {
     k++;
