@@ -1,2 +1,9 @@
-//module.exports = 123;
-module.exports = 3;
+fsdf();
+
+function fsdf() {
+  const a = 3;
+}
+
+const arr = [];
+const b = arr.map((c) => c + 3);
+const c;
