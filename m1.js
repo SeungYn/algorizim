@@ -1,36 +1,20 @@
-//'use strict';
+const cluster = require('cluster');
+const http = require('http');
+const numCpus = require('os').cpus().length;
 
-const a = new Date();
-console.log(a.getTimezoneOffset());
-const b = a.getTime() + a.getTimezoneOffset() * 60 * 1000;
-console.log(new Date(b));
-console.log(eval('1 + 3'));
-name = 3;
-var test = 45;
-console.log(globalThis);
-
-const q = (function () {
-  let value = 0;
-
-  function up() {
-    value++;
-    return value;
+if (cluster.isMaster) {
+  console.log(numCpus);
+  for (let i = 0; i < numCpus; i++) {
+    cluster.fork();
   }
-
-  function getValue() {
-    return value;
-  }
-
-  return {
-    up,
-    getValue,
-  };
-})();
-
-console.log(q.up());
-console.log(q.up());
-console.log(q.up());
-console.log(q.up());
-console.log(q.up());
-console.log(q.up());
-console.log(q.getValue());
+} else {
+  http
+    .createServer((req, res) => {
+      console.log('응답');
+      return res.end('f');
+    })
+    .listen(8999, () => {
+      console.log('서버 실행');
+    });
+  console.log('워커 실행');
+}
